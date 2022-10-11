@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { Form, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { Ingredient } from '../../ingredients.model';
 import { RecipeModel } from '../recipe.model';
@@ -16,7 +16,11 @@ export class EditRecipeComponent implements OnInit {
   currentRecipe: RecipeModel = new RecipeModel('', '', '', null);
   recipeForm: FormGroup;
 
-  constructor(private currentRoute: ActivatedRoute, private currentRecipeService: RecipeService) { }
+  constructor(
+    private currentRoute: ActivatedRoute,
+    private currentRecipeService: RecipeService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.currentRoute.params.subscribe(
@@ -64,7 +68,7 @@ export class EditRecipeComponent implements OnInit {
   {
     if(!this.editingMode) this.currentRecipeService.addRecipe(this.recipeForm.value);
     else this.currentRecipeService.updateRecipe(this.id, this.recipeForm.value);
-    console.log(this.currentRecipeService.getRecipes())
+    this.onRedirect();
   }
 
   get controls()
@@ -86,10 +90,25 @@ export class EditRecipeComponent implements OnInit {
 
   onDeleteIngredient(ingredientIndex: number)
   {
-    console.log('delete ingredient', ingredientIndex);
-    //this.currentRecipe.ingredients.splice(ingredientIndex, 1);
+    (this.recipeForm.get('ingredients') as FormArray).removeAt(ingredientIndex);
+    //this.currentRecipeService.deleteIngredientOfRecipe(this.id, ingredientIndex);
     //(this.recipeForm.get('ingredients') as FormArray).
   }
 
+  onDeleteAllIngredients()
+  {
+    (this.recipeForm.get('ingredients') as FormArray).clear();
+  }
+
+
+  onClearForm()
+  {
+    this.recipeForm.reset();
+  }
+
+  onRedirect()
+  {
+    this.router.navigate(['/recipes']);
+  }
 
 }

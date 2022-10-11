@@ -10,16 +10,12 @@
           >
             Guardar
           </button>
-          <button class="btn btn-danger" type="button">Cancelar</button>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <img
-            src="{{ currentRecipe.imagePath }}"
-            class="image-responsive"
-            style="width: 25rem; aspect-ratio: 1"
-          />
+          <button class="btn btn-primary" type="button" (click)="onClearForm()">
+            Limpiar
+          </button>
+          <button class="btn btn-danger" type="button" (click)="onRedirect()">
+            Cancelar
+          </button>
         </div>
       </div>
       <div class="row">
@@ -40,6 +36,7 @@
           <div class="form-group">
             <label for="imagePath">Image Path</label>
             <input
+              #imagePath
               type="text"
               name="imagePath"
               id="imagePath"
@@ -47,6 +44,15 @@
               formControlName="imagePath"
             />
           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <img
+            [src]="imagePath.value"
+            class="image-responsive"
+            style="width: 25rem; aspect-ratio: 1"
+          />
         </div>
       </div>
       <div class="row">
@@ -100,13 +106,22 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-6">
               <button
                 class="btn btn-success"
-                (click)="onAddIngredient()"
                 type="button"
+                (click)="onAddIngredient()"
               >
                 Añadir ingrediente
+              </button>
+            </div>
+            <div class="col-xs-6">
+              <button
+                class="btn btn-danger"
+                type="button"
+                (click)="onDeleteAllIngredients()"
+              >
+                Eliminar todos los ingredientes
               </button>
             </div>
           </div>

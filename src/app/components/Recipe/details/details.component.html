@@ -24,7 +24,7 @@
           <a (click)="addToShoppingList()">Añadir a lista de compra</a>
         </li>
         <li><a [routerLink]="['../edit', id]">Editar receta</a></li>
-        <li><a>Eliminar receta</a></li>
+        <li><a (click)="deleteRecipe()">Eliminar receta</a></li>
       </ul>
     </div>
   </div>
