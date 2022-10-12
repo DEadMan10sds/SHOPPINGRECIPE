@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Output, OnInit } from "@angular/core";
 import { dataStorageService } from "src/app/services/dataStorage.service";
 
 @Component({
@@ -11,11 +11,10 @@ export class HeaderComponent implements OnInit{
   @Output('selectSection') sectionSelected = new EventEmitter<string>();
   collapsed: Boolean = true;
 
-  constructor(private httpService: dataStorageService){}
+  constructor(private dataStorageService: dataStorageService){}
 
-  ngOnInit()
-  {
-    this.onFetchRecipes();
+  ngOnInit(): void {
+      this.onFetchRecipes();
   }
 
   onSelect(section: string){
@@ -24,12 +23,11 @@ export class HeaderComponent implements OnInit{
 
   onSaveRecipes()
   {
-    this.httpService.saveRecipes();
+    this.dataStorageService.saveRecipes();
   }
 
   onFetchRecipes()
   {
-    this.httpService.getRecipes();
+    this.dataStorageService.getRecipes();
   }
-
 }

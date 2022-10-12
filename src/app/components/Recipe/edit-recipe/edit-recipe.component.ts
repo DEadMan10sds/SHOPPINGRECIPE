@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Form, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RecipeService } from 'src/app/services/recipe.service';
-import { Ingredient } from '../../ingredients.model';
 import { RecipeModel } from '../recipe.model';
 
 @Component({
@@ -24,13 +23,13 @@ export class EditRecipeComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentRoute.params.subscribe(
-      (params: Params) =>{
+      (params: Params) => {
         this.id = +params['id'];
         this.editingMode = params['id'] != null;
         this.initForm();
       }
-      );
-    }
+    );
+  }
 
   private initForm()
   {
